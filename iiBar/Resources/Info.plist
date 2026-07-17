@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SUFeedURL</key>
+	<string>https://joker311223.github.io/iiBar/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>fQ2kWqCLfAPAxQX1rp8gVNoG9hlAV/Gmm7kMBbxFe+A=</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.joker311223.iiBar</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>iibar</string>
+			</array>
+		</dict>
+	</array>
+	<key>iiBarRepositoryURL</key>
+	<string>https://github.com/Joker311223/iiBar</string>
+	<key>iiBarDonateURL</key>
+	<string>https://github.com/Joker311223/iiBar</string>
+	<key>iiBarMenuBarItemSpacingExecutableURI</key>
+	<string>file:///usr/bin/env</string>
+	<key>iiBarSkyLightFrameworkPath</key>
+	<string>/System/Library/PrivateFrameworks/SkyLight.framework/SkyLight</string>
+</dict>
+</plist>

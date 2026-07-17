@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="iiBar URL Scheme 自动化参考。">
+  <title>自动化 · iiBar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">ii</span><span>iiBar</span></a>
+    <nav aria-label="主导航"><a href="index.html">概览</a><a href="guide.html">使用指南</a><a class="active" href="automation.html">自动化</a><a href="https://github.com/Joker311223/iiBar">GitHub</a></nav>
+  </header>
+  <main class="docs-layout">
+    <aside class="toc"><span>本页目录</span><a href="#actions">动作</a><a href="#settings">修改设置</a><a href="#read">读取设置</a><a href="#security">授权</a></aside>
+    <article class="docs-content">
+      <div class="eyebrow">开发者参考</div><h1><code>iibar://</code> 自动化</h1><p class="lead">可从终端、快捷指令、Raycast、Alfred 或任意能打开 URL 的应用控制 iiBar。</p>
+      <section id="actions"><h2>动作</h2><div class="table-wrap"><table><thead><tr><th>URL</th><th>作用</th></tr></thead><tbody><tr><td><code>iibar://toggle-hidden</code></td><td>显示或隐藏“隐藏”区域</td></tr><tr><td><code>iibar://toggle-always-hidden</code></td><td>显示或隐藏“始终隐藏”区域</td></tr><tr><td><code>iibar://search</code></td><td>打开项目搜索</td></tr><tr><td><code>iibar://toggle-iibarbar</code></td><td>切换 iiBar Bar</td></tr><tr><td><code>iibar://toggle-application-menus</code></td><td>切换应用菜单</td></tr><tr><td><code>iibar://open-settings</code></td><td>打开设置窗口</td></tr></tbody></table></div><pre><code>open "iibar://search"</code></pre></section>
+      <section id="settings"><h2>修改设置</h2><p>使用 <code>set</code> 设置值，或使用 <code>toggle</code> 翻转布尔值：</p><pre><code>open "iibar://set?key=autoRehide&amp;value=true"
+open "iibar://toggle?key=hideApplicationMenus"</code></pre><p>部分显示器级设置支持附加 <code>display</code> 参数。具体可用键以源码中的 <code>SettingsURIHandler</code> 为准。</p></section>
+      <section id="read"><h2>读取设置</h2><p><code>get</code> 需要提供回调 URL。iiBar 会把 JSON 结果编码到回调的 <code>data</code> 查询参数中：</p><pre><code>open "iibar://get?key=autoRehide&amp;callback=myapp://response"</code></pre><div class="note"><strong>调试工具</strong><p>仓库内的 <code>iiBarCtl</code> 可以发送请求并展示回调，适合验证集成。</p></div></section>
+      <section id="security"><h2>授权与安全</h2><p>外部应用首次读写设置时需要用户确认。应用也可以主动请求授权：</p><pre><code>open "iibar://authorize"</code></pre><p>只有获得许可的调用方才能读写设置；普通的显示、搜索和打开设置动作不涉及设置读取。</p></section>
+    </article>
+  </main>
+  <footer><span>iiBar 官方文档</span><span><a href="https://github.com/Joker311223/iiBar/issues">反馈问题</a></span></footer>
+</body>
+</html>

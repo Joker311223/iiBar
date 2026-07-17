@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="iiBar 官方文档：macOS 菜单栏管理、布局与自动化。">
+  <title>iiBar 官方文档</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">ii</span><span>iiBar</span></a>
+    <nav aria-label="主导航">
+      <a class="active" href="index.html">概览</a>
+      <a href="guide.html">使用指南</a>
+      <a href="automation.html">自动化</a>
+      <a href="https://github.com/Joker311223/iiBar">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">macOS 菜单栏，由你掌控</div>
+      <h1>腾出空间，保留专注。</h1>
+      <p>iiBar 帮你隐藏、整理和快速查找菜单栏项目，并为不同显示器与工作场景保存独立布局。</p>
+      <div class="actions">
+        <a class="button primary" href="guide.html">开始使用</a>
+        <a class="button secondary" href="https://github.com/Joker311223/iiBar">查看源码</a>
+      </div>
+      <div class="requirements"><span>macOS 26+</span><span>开源 · GPL-3.0</span><span>原生 Swift</span></div>
+    </section>
+
+    <section class="section" aria-labelledby="features-title">
+      <div class="section-heading">
+        <span>核心能力</span>
+        <h2 id="features-title">让有限的菜单栏保持清爽</h2>
+      </div>
+      <div class="grid three">
+        <article class="card"><div class="card-icon">01</div><h3>分区管理</h3><p>将项目放入可见、隐藏或始终隐藏区域，并按需快速展开。</p></article>
+        <article class="card"><div class="card-icon">02</div><h3>iiBar Bar</h3><p>在刘海屏或空间不足时，把菜单栏项目显示在独立浮层中。</p></article>
+        <article class="card"><div class="card-icon">03</div><h3>布局档案</h3><p>保存多套菜单栏布局，手动切换或跟随前台应用自动切换。</p></article>
+        <article class="card"><div class="card-icon">04</div><h3>快速搜索</h3><p>通过快捷键搜索并定位项目，不必逐个展开隐藏区域。</p></article>
+        <article class="card"><div class="card-icon">05</div><h3>外观定制</h3><p>设置颜色、渐变、阴影、边框和形状，适配浅色与深色模式。</p></article>
+        <article class="card"><div class="card-icon">06</div><h3>自动化接口</h3><p>使用 URL Scheme 触发动作、修改设置或读取当前配置。</p></article>
+      </div>
+    </section>
+
+    <section class="section split">
+      <div>
+        <div class="section-heading"><span>快速开始</span><h2>三步完成首次配置</h2></div>
+        <ol class="steps">
+          <li><strong>构建并启动</strong><p>使用 Xcode 打开 <code>iiBar.xcodeproj</code>，选择 iiBar Scheme 运行。</p></li>
+          <li><strong>授予权限</strong><p>按引导开启辅助功能和屏幕录制权限，让 iiBar 能识别与移动项目。</p></li>
+          <li><strong>整理菜单栏</strong><p>在“菜单栏布局”中拖放项目，然后配置快捷键和自动隐藏规则。</p></li>
+        </ol>
+      </div>
+      <aside class="callout">
+        <span class="callout-label">命令行示例</span>
+        <pre><code>open "iibar://toggle-hidden"
+open "iibar://search"
+open "iibar://open-settings"</code></pre>
+        <a href="automation.html">查看全部自动化能力 →</a>
+      </aside>
+    </section>
+  </main>
+
+  <footer><span>iiBar 官方文档</span><span>基于 Thaw 与 Ice · GPL-3.0</span></footer>
+</body>
+</html>

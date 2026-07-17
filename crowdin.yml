@@ -1,0 +1,4 @@
+files:
+  - source: /iiBar/Resources/Localizable.xcstrings
+    translation: /iiBar/Resources/Localizable.xcstrings
+    multilingual: 1

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="iiBar 安装、权限和菜单栏布局使用指南。">
+  <title>使用指南 · iiBar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">ii</span><span>iiBar</span></a>
+    <nav aria-label="主导航"><a href="index.html">概览</a><a class="active" href="guide.html">使用指南</a><a href="automation.html">自动化</a><a href="https://github.com/Joker311223/iiBar">GitHub</a></nav>
+  </header>
+  <main class="docs-layout">
+    <aside class="toc"><span>本页目录</span><a href="#install">安装</a><a href="#permissions">权限</a><a href="#layout">整理布局</a><a href="#profiles">布局档案</a><a href="#troubleshooting">问题排查</a></aside>
+    <article class="docs-content">
+      <div class="eyebrow">使用指南</div><h1>从安装到第一套布局</h1><p class="lead">当前版本需要从源码构建。正式版本发布后，本页会补充安装包说明。</p>
+      <section id="install"><h2>安装</h2><p>准备 macOS 26+ 和 Xcode 26+，然后执行：</p><pre><code>git clone git@github.com:Joker311223/iiBar.git
+cd iiBar
+open iiBar.xcodeproj</code></pre><p>在 Xcode 顶部选择 <code>iiBar</code> Scheme 与 <code>My Mac</code> 目标，点击运行。若只需验证编译，可关闭代码签名后执行仓库 README 中的 <code>xcodebuild</code> 命令。</p></section>
+      <section id="permissions"><h2>权限</h2><div class="note"><strong>必要权限</strong><p>辅助功能用于识别和移动菜单栏项目；屏幕录制用于布局缩略图、工具提示和部分浮层能力。</p></div><p>首次启动时按照引导授权。也可以稍后前往“iiBar 设置 → 高级 → 权限”，跳转到 macOS“隐私与安全性”页面。</p></section>
+      <section id="layout"><h2>整理布局</h2><ol><li>打开“设置 → 菜单栏布局”。</li><li>将常用项目保留在“可见”区域。</li><li>将偶尔使用的项目拖到“隐藏”区域。</li><li>将无需直接访问的项目拖到“始终隐藏”区域。</li><li>在“常规”中配置悬停、点击、滚动或手势触发方式。</li></ol><p>如果菜单栏空间不足，可开启 iiBar Bar，让隐藏项目显示在菜单栏下方的独立面板中。</p></section>
+      <section id="profiles"><h2>布局档案</h2><p>档案会保存当前区域和项目顺序。你可以为办公、演示或外接显示器场景准备不同档案，并将档案绑定到前台应用或专注模式。</p><div class="note"><strong>建议</strong><p>首次保存档案前，先确认所有需要管理的菜单栏应用都已启动，以免档案缺少项目。</p></div></section>
+      <section id="troubleshooting"><h2>问题排查</h2><h3>项目没有出现在布局列表</h3><p>确认辅助功能权限已经授予，退出并重新启动对应菜单栏应用，然后重新打开布局设置。</p><h3>系统反复请求权限</h3><p>在“系统设置 → 隐私与安全性”中移除 iiBar，重新启动应用并再次授权。</p><h3>构建失败</h3><p>确认当前使用完整 Xcode，而不是仅安装 Command Line Tools；同时检查 Xcode 与 macOS SDK 是否满足项目要求。</p></section>
+    </article>
+  </main>
+  <footer><span>iiBar 官方文档</span><span><a href="https://github.com/Joker311223/iiBar/issues">反馈问题</a></span></footer>
+</body>
+</html>
