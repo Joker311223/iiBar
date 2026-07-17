@@ -9,6 +9,7 @@
 <p align="center">
   <a href="https://github.com/Joker311223/iiBar/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/Joker311223/iiBar/ci.yml?branch=main&style=flat-square"></a>
   <a href="https://joker311223.github.io/iiBar/"><img alt="官方文档" src="https://img.shields.io/badge/docs-官方文档-246bfd?style=flat-square"></a>
+  <a href="https://github.com/Joker311223/iiBar/releases/latest/download/iiBar.dmg"><img alt="下载 iiBar" src="https://img.shields.io/badge/download-iiBar.dmg-2b7cff?style=flat-square"></a>
   <a href="LICENSE"><img alt="GPL-3.0" src="https://img.shields.io/badge/license-GPL--3.0-5b35b5?style=flat-square"></a>
   <img alt="macOS 26+" src="https://img.shields.io/badge/macOS-26%2B-111827?style=flat-square">
 </p>
@@ -17,7 +18,11 @@
 
 iiBar 可以把不常用的菜单栏项目收进隐藏区或始终隐藏区，并通过悬停、点击、滚动、手势或快捷键快速唤出。它还提供独立的 iiBar Bar、菜单栏外观定制、项目搜索、间距控制、布局档案和自动切换能力。
 
-> 当前仓库处于早期维护阶段，尚未提供正式安装包。请先通过 Xcode 从源码构建。
+## 下载与安装
+
+从[官网](https://joker311223.github.io/iiBar/)或 [GitHub Releases](https://github.com/Joker311223/iiBar/releases/latest) 下载 `iiBar.dmg`，打开后将 iiBar 拖入“应用程序”文件夹。
+
+当前公开安装包采用 ad-hoc 签名。如果 macOS 阻止首次启动，请前往“系统设置 → 隐私与安全性”，在 iiBar 提示旁选择“仍要打开”。
 
 ## 主要功能
 

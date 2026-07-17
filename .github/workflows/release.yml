@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag to publish (for example, 1.2.3)
+        description: Release tag to publish (for example, 2.0.0)
         required: true
         type: string
 
@@ -17,25 +17,42 @@ jobs:
     permissions:
       contents: write
     env:
-      APP_NAME: "iiBar.app"
-      DMG_NAME: "iiBar.dmg"
+      APP_NAME: iiBar.app
+      DMG_NAME: iiBar.dmg
+      TAG_NAME: ${{ inputs.tag || github.ref_name }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && format('refs/tags/{0}', inputs.tag) || github.ref }}
 
-      - name: Validate tag name format
-        id: validate
-        env:
-          TAG_NAME: ${{ inputs.tag || github.ref_name }}
+      - name: Validate tag name
         run: |
           if [[ ! "$TAG_NAME" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9._]+)?$ ]]; then
-            echo "Invalid tag name format. Must be in the form 1.2.3"
+            echo "Invalid tag name: $TAG_NAME"
             exit 1
           fi
-      - run: sudo xcode-select -s /Applications/Xcode_26.5.app/Contents/Developer
-      - name: Configure signing
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_26.5.app/Contents/Developer
+
+      - name: Detect Apple signing credentials
+        id: signing
+        env:
+          APPLE_APPLICATION_CERT: ${{ secrets.APPLE_APPLICATION_CERT }}
+          APPLE_APPLICATION_CERT_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          if [[ -n "$APPLE_APPLICATION_CERT" && -n "$APPLE_APPLICATION_CERT_PASSWORD" && -n "$APPLE_ID" && -n "$APPLE_ID_PASSWORD" && -n "$APPLE_TEAM_ID" ]]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure Developer ID signing
+        if: steps.signing.outputs.available == 'true'
         uses: ./.github/actions/configure-signing
         with:
           apple-application-cert: ${{ secrets.APPLE_APPLICATION_CERT }}
@@ -44,33 +61,88 @@ jobs:
           apple-id-password: ${{ secrets.APPLE_ID_PASSWORD }}
           apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
 
-      - name: Build
+      - name: Build signed archive
+        if: steps.signing.outputs.available == 'true'
         uses: ./.github/actions/build
         with:
           apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
 
-      - name: Export Archive
+      - name: Export signed archive and package DMG
+        if: steps.signing.outputs.available == 'true'
         uses: ./.github/actions/export-and-package
         with:
           apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
           app-name: ${{ env.APP_NAME }}
           dmg-name: ${{ env.DMG_NAME }}
 
-      - name: Notarize
+      - name: Notarize signed release
+        if: steps.signing.outputs.available == 'true'
         uses: ./.github/actions/notarize-and-validate
         with:
           dmg-name: ${{ env.DMG_NAME }}
           app-name: ${{ env.APP_NAME }}
 
-      - name: Create GitHub Release
+      - name: Build ad-hoc signed release
+        if: steps.signing.outputs.available != 'true'
+        run: |
+          set -euo pipefail
+          xcodebuild build \
+            -project iiBar.xcodeproj \
+            -scheme iiBar \
+            -destination platform=macOS \
+            -configuration Release \
+            -derivedDataPath build/DerivedData \
+            MARKETING_VERSION="$TAG_NAME" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+          mkdir -p build/Export
+          ditto "build/DerivedData/Build/Products/Release/$APP_NAME" "build/Export/$APP_NAME"
+          codesign --force --deep --sign - "build/Export/$APP_NAME"
+          codesign --verify --deep --strict --verbose=2 "build/Export/$APP_NAME"
+
+          staging="$RUNNER_TEMP/dmg-staging"
+          mkdir -p "$staging"
+          ditto "build/Export/$APP_NAME" "$staging/$APP_NAME"
+          ln -s /Applications "$staging/Applications"
+          hdiutil create \
+            -volname iiBar \
+            -srcfolder "$staging" \
+            -ov \
+            -format UDZO \
+            "build/$DMG_NAME"
+          hdiutil verify "build/$DMG_NAME"
+
+      - name: Create checksum and release notes
+        run: |
+          cd build
+          shasum -a 256 "$DMG_NAME" > "$DMG_NAME.sha256"
+          if [[ "${{ steps.signing.outputs.available }}" == "true" ]]; then
+            signing_note="此安装包已使用 Developer ID 签名并通过 Apple 公证。"
+          else
+            signing_note="此安装包采用 ad-hoc 签名。首次打开若被 macOS 阻止，请在“系统设置 → 隐私与安全性”中选择仍要打开。"
+          fi
+          cat > release-notes.md <<EOF
+          ## iiBar $TAG_NAME
+
+          下载 **iiBar.dmg**，将 iiBar 拖入“应用程序”文件夹即可安装。
+
+          $signing_note
+          EOF
+
+      - name: Publish GitHub Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ inputs.tag || github.ref_name }}
-          files: build/${{ env.DMG_NAME }}
-          generate_release_notes: false
-          draft: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ env.TAG_NAME }}
+          name: iiBar ${{ env.TAG_NAME }}
+          body_path: build/release-notes.md
+          files: |
+            build/${{ env.DMG_NAME }}
+            build/${{ env.DMG_NAME }}.sha256
+          draft: false
+          prerelease: false
+          make_latest: true
 
       - name: Cleanup keychain
         if: always()

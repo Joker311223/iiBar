@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="iiBar 安装、权限和菜单栏布局使用指南。">
   <title>使用指南 · iiBar</title>
+  <link rel="icon" href="icon.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="index.html"><span class="brand-mark">ii</span><span>iiBar</span></a>
+    <a class="brand" href="index.html"><img class="brand-icon" src="icon.png" alt=""><span>iiBar</span></a>
     <nav aria-label="主导航"><a href="index.html">概览</a><a class="active" href="guide.html">使用指南</a><a href="automation.html">自动化</a><a href="https://github.com/Joker311223/iiBar">GitHub</a></nav>
   </header>
   <main class="docs-layout">
     <aside class="toc"><span>本页目录</span><a href="#install">安装</a><a href="#permissions">权限</a><a href="#layout">整理布局</a><a href="#profiles">布局档案</a><a href="#troubleshooting">问题排查</a></aside>
     <article class="docs-content">
-      <div class="eyebrow">使用指南</div><h1>从安装到第一套布局</h1><p class="lead">当前版本需要从源码构建。正式版本发布后，本页会补充安装包说明。</p>
-      <section id="install"><h2>安装</h2><p>准备 macOS 26+ 和 Xcode 26+，然后执行：</p><pre><code>git clone git@github.com:Joker311223/iiBar.git
+      <div class="eyebrow">使用指南</div><h1>从安装到第一套布局</h1><p class="lead">下载 DMG 即可安装 iiBar 2.0.0；无需安装 Xcode。</p>
+      <section id="install"><h2>安装</h2><p><a class="button primary" href="https://github.com/Joker311223/iiBar/releases/latest/download/iiBar.dmg">直接下载 iiBar.dmg</a></p><ol><li>打开下载的 DMG。</li><li>将 iiBar 拖入“应用程序”文件夹。</li><li>从“应用程序”启动 iiBar。</li></ol><div class="note"><strong>首次打开提示</strong><p>当前公开安装包采用 ad-hoc 签名。如果 macOS 阻止启动，请前往“系统设置 → 隐私与安全性”，在 iiBar 提示旁选择“仍要打开”。</p></div><h3>从源码构建</h3><p>开发者可准备 macOS 26+ 和 Xcode 26+，然后执行：</p><pre><code>git clone git@github.com:Joker311223/iiBar.git
 cd iiBar
 open iiBar.xcodeproj</code></pre><p>在 Xcode 顶部选择 <code>iiBar</code> Scheme 与 <code>My Mac</code> 目标，点击运行。若只需验证编译，可关闭代码签名后执行仓库 README 中的 <code>xcodebuild</code> 命令。</p></section>
       <section id="permissions"><h2>权限</h2><div class="note"><strong>必要权限</strong><p>辅助功能用于识别和移动菜单栏项目；屏幕录制用于布局缩略图、工具提示和部分浮层能力。</p></div><p>首次启动时按照引导授权。也可以稍后前往“iiBar 设置 → 高级 → 权限”，跳转到 macOS“隐私与安全性”页面。</p></section>
