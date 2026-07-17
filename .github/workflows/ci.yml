@@ -6,7 +6,10 @@ on:
   pull_request:
     paths:
       - ".github/workflows/ci.yml"
+      - ".swiftlint.yml"
       - "Package.swift"
+      - "iiBar.xcodeproj/**"
+      - "scripts/**"
       - "**/*.swift"
       - "**/*.xcstrings"
   push:
@@ -15,7 +18,10 @@ on:
       - development
     paths:
       - ".github/workflows/ci.yml"
+      - ".swiftlint.yml"
       - "Package.swift"
+      - "iiBar.xcodeproj/**"
+      - "scripts/**"
       - "**/*.swift"
       - "**/*.xcstrings"
   workflow_dispatch:
