@@ -135,6 +135,8 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     needs: build
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -146,9 +148,12 @@ jobs:
           name: coverage-data
 
       - name: SonarQube Scan
+        if: env.SONAR_TOKEN != ''
         uses: SonarSource/sonarqube-scan-action@v8.2.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Skip unconfigured SonarQube
+        if: env.SONAR_TOKEN == ''
+        run: echo "Skipping SonarQube because SONAR_TOKEN is not configured"
 
   # Dummy job that passes for forks (no access to SONAR_TOKEN secret)
   sonarqube-skip-forks:
